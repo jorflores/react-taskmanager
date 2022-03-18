@@ -1,8 +1,14 @@
-import React from "react";
+import React,{useState} from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+import  "../App.css"
+
 const ListTasks = (props) => {
+
+ 
+
+
   const DeleteTask = async (id) => {
     console.log(id);
     await axios.delete("http://localhost:4000/api/delete/" + id);
@@ -14,6 +20,9 @@ const ListTasks = (props) => {
     await axios.put("http://localhost:4000/api/change_status/" + id);
     props.onDeleteTask();
   };
+
+
+
 
   return (
     <div className="col-md-7">
@@ -58,6 +67,10 @@ const ListTasks = (props) => {
           ))}
         </tbody>
       </table>
+         
+
+      
+
     </div>
   );
 };

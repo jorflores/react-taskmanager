@@ -7,10 +7,12 @@ import ListTasks from "./components/ListTasks";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "./components/Card";
+import AlertSuccess from "./components/Alerts/AlertSuccess";
 
 function App() {
-
   const [tasks, setTasks] = useState([]);
+  const [taskAdded, setTaskAdded] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     getTasks();
@@ -25,6 +27,13 @@ function App() {
     getTasks();
   };
 
+  const onShowAlert = () => {
+    setIsVisible(true);
+    window.setTimeout(() => {
+      setIsVisible(false);
+    }, 2000);
+  };
+
   return (
     <BrowserRouter>
       <Navigation />
@@ -33,8 +42,17 @@ function App() {
           path="/"
           element={
             <Card className="container">
-              <AddTask onAddTask={getCurrentTasks} AddOrChange="Add" />
-              <ListTasks tasks={tasks} onDeleteTask={getCurrentTasks} />
+              <AlertSuccess isVisible={isVisible} />
+              <AddTask
+                onAddTask={getCurrentTasks}
+                onShowAlert={onShowAlert}
+                AddOrChange="Add"
+              />
+              <ListTasks
+                tasks={tasks}
+                onDeleteTask={getCurrentTasks}
+                taskAdded={taskAdded}
+              />
             </Card>
           }
         />
